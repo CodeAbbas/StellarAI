@@ -1,0 +1,7 @@
+# IDE files & logs
+.idea
+.vscode/
+*.log
+
+# Secret configuration file
+src/config.js

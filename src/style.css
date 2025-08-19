@@ -1,0 +1,66 @@
+:root {
+    --bg-dark: #0A0A0A;
+    --panel-dark: rgba(10, 10, 10, 0.5);
+    --border-dark: rgba(255, 255, 255, 0.15);
+    --text-dark: #EAEAEA;
+    --text-muted-dark: #888888;
+    --accent-start: #00AFFF; 
+    --accent-end: #00FFD1;
+}
+.dark { 
+    --bg-primary: var(--bg-dark); 
+    --bg-panel: var(--panel-dark); 
+    --border-color: var(--border-dark); 
+    --text-primary: var(--text-dark); 
+    --text-muted: var(--text-muted-dark); 
+}
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--bg-primary); 
+    color: var(--text-primary); 
+    overflow: hidden;
+}
+.backdrop-blur-xl { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+.gradient-text { background: linear-gradient(90deg, var(--accent-start), var(--accent-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.gradient-bg { background: linear-gradient(90deg, var(--accent-start), var(--accent-end)); }
+
+#image-output-bg {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+#image-output-bg.visible { opacity: 1; }
+
+.prompt-bar {
+     transition: all 0.3s ease;
+     box-shadow: 0 0 25px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--border-color);
+}
+.prompt-bar:focus-within {
+    box-shadow: 0 0 30px rgba(0, 175, 255, 0.4), 0 0 0 1px rgba(0, 175, 255, 0.7);
+}
+.gen-button-shadow { box-shadow: 0 0 15px rgba(0, 175, 255, 0.3); }
+.gen-button-shadow:hover:not(:disabled) { box-shadow: 0 0 25px rgba(0, 175, 255, 0.6); }
+
+/* --- History Tray --- */
+#history-tray {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    scrollbar-width: none; /* Firefox */
+}
+#history-tray::-webkit-scrollbar { display: none; /* Safari and Chrome */ }
+#history-tray.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.history-item {
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+.history-item:hover {
+    border-color: rgba(255,255,255,0.5);
+}
+.history-item.selected {
+    border-color: var(--accent-start);
+    box-shadow: 0 0 15px var(--accent-start);
+}
