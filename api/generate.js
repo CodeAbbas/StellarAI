@@ -11,7 +11,7 @@ export default async function handler(request, response) {
 
   const API_KEY = process.env.API_KEY;
 
-  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-005:predict?key=${API_KEY}`;
+  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${API_KEY}`;
 
   const payload = {
     instances: [{ prompt: prompt }],
