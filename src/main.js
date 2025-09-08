@@ -73,15 +73,21 @@ document.addEventListener('DOMContentLoaded', () => {
 };
 
     // --- History Management ---
+    // In src/main.js, replace the old renderHistory function with this one:
+
     const renderHistory = () => {
         elements.historyItems.innerHTML = '';
         if (generationHistory.length > 0) {
             elements.historyTray.classList.add('visible');
         }
-        generationHistory.forEach((item) => {
+        generationHistory.forEach((item, index) => {
+            // Container for the image and button
+            const container = document.createElement('div');
+            container.className = 'history-item-container';
+
             const img = document.createElement('img');
             img.src = item.url;
-            img.className = 'history-item h-14 w-14 object-cover rounded-md cursor-pointer flex-shrink-0';
+            img.className = 'history-item h-14 w-14 object-cover rounded-md cursor-pointer';
             img.alt = item.prompt;
             if (item.selected) {
                 img.classList.add('selected');
@@ -95,7 +101,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 handleInput();
                 renderHistory();
             };
-            elements.historyItems.appendChild(img);
+
+            // download button
+            const downloadBtn = document.createElement('button');
+            downloadBtn.className = 'download-btn';
+            downloadBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>`;
+
+
+            downloadBtn.onclick = (e) => {
+                e.stopPropagation(); 
+                const link = document.createElement('a');
+                link.href = item.url;
+                link.download = `${item.prompt.slice(0, 30).replace(/\s+/g, '_')}_${index}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+
+ 
+            container.appendChild(img);
+            container.appendChild(downloadBtn);
+            elements.historyItems.appendChild(container);
         });
     };
 

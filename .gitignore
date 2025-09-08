@@ -4,4 +4,4 @@
 *.log
 
 # Secret configuration file
-src/config.js
+.vercel
