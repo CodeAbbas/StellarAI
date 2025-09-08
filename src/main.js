@@ -48,32 +48,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- API Call (Imagen) ---
     const generateImageAPI = async (prompt, signal) => {
-        const API_URL = `api/generate`; // Local API endpoint
-        const payload = {
-            instances: [{ prompt: prompt }],
-            parameters: { "sampleCount": 1 }
-        };
+    const API_URL = `/api/generate`; 
+    const payload = { prompt: prompt };
 
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal,
-        });
+    const response = await fetch(API_URL, {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal,
+    });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error("API Error Response:", errorData);
-            throw new Error(errorData.message || `API Error: ${response.status}`);
-        }
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API Error Response:", errorData);
+        throw new Error(errorData.message || `API Error: ${response.status}`);
+    }
 
-        const result = await response.json();
-        if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
-            return result.predictions[0].bytesBase64Encoded;
-        } else {
-            throw new Error("Invalid response format from API.");
-        }
-    };
+    const result = await response.json();
+    if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
+        return result.predictions[0].bytesBase64Encoded;
+    } else {
+        throw new Error("Invalid response format from API.");
+    }
+};
 
     // --- History Management ---
     const renderHistory = () => {
