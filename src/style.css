@@ -71,25 +71,22 @@ body {
 }
 .download-btn {
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #00AFFF;
+    box-shadow: 0 0 2px var(--accent-start);
     color: white;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
-    opacity: 0; /* Hidden by default */
-    transition: opacity 0.2s ease-in-out;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
+    z-index: 10;
+    opacity: 0;
+    margin-bottom: 5px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease-out;}
 
 .history-item-container:hover .download-btn {
-    opacity: 1; 
+    filter: brightness(1.2);
+    box-shadow: 0 0 8px var(--accent-start); 
 }
 
 .history-item-container:hover .history-item {
