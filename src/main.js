@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- The rest of your JavaScript is exactly the same as before ---
-    
+
     // --- State Management ---
     let generationController = null;
     let generationHistory = [];
     const MAX_HISTORY = 5;
-    
+
     // --- UI State Management ---
     const showMessage = (title, text, icon, isError = false) => {
         const errorColor = isError ? 'text-red-400' : '';
@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.messageContent.innerHTML = `<div class="mx-auto w-12 h-12 border-4 border-[var(--accent-start)] border-t-transparent rounded-full animate-spin"></div><p class="mt-4 text-muted">Generating, please wait...</p>`;
         }
     };
-    
+
     // --- API Call (Imagen) ---
     const generateImageAPI = async (prompt, signal) => {
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${API_KEY}`;
+        const API_URL = `api/generate`; // Local API endpoint
         const payload = {
             instances: [{ prompt: prompt }],
             parameters: { "sampleCount": 1 }
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!response.ok) {
             const errorData = await response.json();
             console.error("API Error Response:", errorData);
-            throw new Error(errorData.error?.message || `API Error: ${response.status}`);
+            throw new Error(errorData.message || `API Error: ${response.status}`);
         }
 
         const result = await response.json();
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const prompt = elements.promptInput.value.trim();
         if (!prompt) return;
-        
+
         if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
             showMessage('API Key Missing', 'Create a `config.js` file in the `src` folder and add your API key.', `<svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`, true);
             return;
@@ -128,11 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
         setLoadingState(true);
         generationHistory.forEach(h => h.selected = false);
         renderHistory();
-        
+
         try {
             const base64Data = await generateImageAPI(prompt, signal);
             const imageUrl = `data:image/png;base64,${base64Data}`;
-            
+
             elements.imageOutputBg.style.backgroundImage = `url(${imageUrl})`;
             elements.imageOutputBg.classList.add('visible');
             elements.messageContent.innerHTML = '';
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setLoadingState(false);
         }
     };
-    
+
     // --- Input Field Enhancements ---
     const handleInput = () => {
         autoResizeTextarea();
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Setup ---
     const initializeApp = () => {
         elements.generateBtn.addEventListener('click', () => {
-             if (!elements.promptInput.value.trim()) {
+            if (!elements.promptInput.value.trim()) {
                 showMessage('Input Required', 'Please enter a prompt.', `<svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`, true);
                 return;
             }
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         elements.promptInput.addEventListener('input', handleInput);
         elements.clearBtn.addEventListener('click', clearInput);
-        
+
         toggleClearButton();
         showInitialMessage();
     };
