@@ -71,24 +71,26 @@ body {
 }
 .download-btn {
     position: absolute;
-    top: 0;
+    top: 6px; 
     left: 50%;
-    background-color: #00AFFF;
+    transform: translateX(-50%); 
+    background-color: var(--accent-start);
     box-shadow: 0 0 2px var(--accent-start);
     color: white;
     cursor: pointer;
     z-index: 10;
-    opacity: 0;
-    margin-bottom: 5px;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    transition: all 0.2s ease-out;}
+    opacity: 0; 
+    pointer-events: none; 
+    transition: all 0.2s ease-out;
+}
 
 .history-item-container:hover .download-btn {
+    opacity: 1; 
+    pointer-events: auto; 
     filter: brightness(1.2);
-    box-shadow: 0 0 8px var(--accent-start); 
+    box-shadow: 0 0 8px var(--accent-start);
 }
 
 .history-item-container:hover .history-item {
-    filter: brightness(0.7); 
+    filter: brightness(0.7);
 }
